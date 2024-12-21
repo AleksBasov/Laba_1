@@ -1,36 +1,50 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
-import './App.css'
+import React, { useState } from 'react';
+
 const App = () => {
-    const [numbers, setNumbers] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  
-    const handleChange = (index, value) => {
-      const newNumbers = [...numbers];
-      newNumbers[index] = Number(value);
-      setNumbers(newNumbers);
-    };
-  
-    const calculateAverage = () => {
-      const sum = numbers.reduce((acc, num) => acc + num, 0);
-      return (sum / numbers.length).toFixed(2); 
-    };
-  
-    return (
-      <div>
-        {numbers.map((num, index) => (
-          <div key={index}>
-            <input
-              value={num}
-              onChange={(e) => handleChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-        <h2>Среднее арифметическое: {calculateAverage()}</h2>
-      </div>
-    );
+  const [inputValue1, setInputValue1] = useState('');
+  const [inputValue2, setInputValue2] = useState('');
+  const [inputValue3, setInputValue3] = useState('');
+  const [items, setItems] = useState([]);
+
+  const addItem = () => {
+    if (inputValue1.trim() !== '' || inputValue2.trim() !== '' || inputValue3.trim() !== '') {
+      setItems([...items, { text: `${inputValue1} ${inputValue2} ${inputValue3}` }]);
+      setInputValue1('');
+      setInputValue2('');
+      setInputValue3('');
+    }
   };
 
-export default App;
+  return (
+    <div>
+      <input 
+        type="text" 
+        value={inputValue1} 
+        onChange={(e) => setInputValue1(e.target.value)} 
+        placeholder="Введите первое значение" 
+      />
+      <input 
+        type="text" 
+        value={inputValue2} 
+        onChange={(e) => setInputValue2(e.target.value)} 
+        placeholder="Введите второе значение" 
+      />
+      <input 
+        type="text" 
+        value={inputValue3} 
+        onChange={(e) => setInputValue3(e.target.value)} 
+        placeholder="Введите третье значение" 
+      />
+      <button onClick={addItem}>Добавить</button>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{item.text}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
+export default App;
 
 
